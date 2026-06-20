@@ -1,16 +1,57 @@
-# React + Vite
+# StartupForge Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+StartupForge is a premium team-builder and co-founder matching platform connecting startup founders with talented collaborators. This directory contains the React frontend application built with Vite, Tailwind CSS, Framer Motion, and Lucide React.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Dynamic Homepage**: Modern design with animations, featured startups, featured opportunities, and statistics.
+- **Glassmorphic Navigation**: Responsive navigation menu adapting dynamically based on user role and auth status.
+- **Authentication**: Custom authentication integration leveraging Better Auth, supporting roles (Founder, Collaborator, Admin) and password validation rules.
+- **Image Upload Integration**: Register and update profiles by uploading avatars directly to ImgBB.
+- **Browse Catalogs**: Browse approved startups and opportunities with industry filters, search by role title/skills, and server-side pagination.
+- **Role-Based Dashboards**:
+  - **Founder**: Manage startup profile, post opportunities (limited to 3 for free tier, unlocked with Stripe), accept/reject applicants.
+  - **Collaborator**: Submit applications, track application status, edit professional profile.
+  - **Admin**: System-wide overview, block/unblock users, approve/reject startups, track revenue transactions.
+- **Stripe Premium Integration**: Seamless checkout redirect for founders to purchase unlimited postings.
 
-## React Compiler
+## 🛠️ Technology Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework**: React (Vite template)
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **Animations**: Framer Motion
+- **HTTP Client**: Axios (configured with HTTPOnly credentials integration)
+- **State Management**: React Context API
+- **Payments**: Stripe Client SDK
 
-## Expanding the ESLint configuration
+## 📦 Setup & Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Navigate to the client directory:
+   ```bash
+   cd startupforge-client
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env` file in this directory and populate the variables:
+   ```env
+   VITE_API_URL=http://localhost:5000/api
+   VITE_IMGBB_API_KEY=your_imgbb_key_here
+   VITE_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key_here
+   ```
+
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+## 📂 Folder Structure
+
+- `src/components/`: Shared UI layout elements (Navbar, Footer, etc.).
+- `src/context/`: Global state providers (AuthContext).
+- `src/pages/`: Public pages (Home, Browse, Details, Login, Register, Loading, Error404).
+- `src/pages/dashboard/`: Restricted role-specific view containers and forms.
