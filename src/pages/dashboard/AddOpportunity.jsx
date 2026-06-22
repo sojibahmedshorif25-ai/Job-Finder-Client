@@ -33,7 +33,7 @@ export default function AddOpportunity() {
       try {
         setLoading(true);
         // 1. Fetch startup profile
-        const startupRes = await axios.get(`${API_URL}/startups/my-profile`);
+        const startupRes = await axios.get(`${API_URL}/startups/my-startup`);
         if (startupRes.data.success && startupRes.data.startup) {
           setStartup(startupRes.data.startup);
         }

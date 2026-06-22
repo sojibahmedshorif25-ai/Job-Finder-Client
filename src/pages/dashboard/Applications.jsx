@@ -83,15 +83,15 @@ export default function Applications() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-dark-900/60 pb-3">
                 <div className="flex items-center space-x-3">
                   <img
-                    src={app.user_image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80"}
-                    alt={app.user_name}
+                    src={app.applicant_image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80"}
+                    alt={app.applicant_name}
                     className="h-10 w-10 rounded-full border border-brand-500/20 object-cover"
                   />
                   <div>
-                    <h3 className="text-sm font-bold text-white leading-tight">{app.user_name}</h3>
+                    <h3 className="text-sm font-bold text-white leading-tight">{app.applicant_name}</h3>
                     <div className="flex items-center space-x-1.5 text-[10px] text-slate-500">
                       <Mail className="h-3.5 w-3.5" />
-                      <span>{app.user_email}</span>
+                      <span>{app.applicant_email}</span>
                     </div>
                   </div>
                 </div>
@@ -99,7 +99,7 @@ export default function Applications() {
                 <div className="flex items-center space-x-2">
                   <span className="text-[10px] text-slate-500 font-semibold uppercase">Applied for:</span>
                   <span className="text-[10px] px-2 py-0.5 rounded bg-brand-500/10 text-brand-450 border border-brand-500/15 font-semibold">
-                    {app.role_title}
+                    {app.opportunity_title}
                   </span>
                 </div>
               </div>

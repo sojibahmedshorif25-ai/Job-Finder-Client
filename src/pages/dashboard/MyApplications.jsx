@@ -72,7 +72,7 @@ export default function MyApplications() {
                   </div>
                 </div>
 
-                <h3 className="text-lg font-bold text-white leading-snug line-clamp-1">{app.role_title}</h3>
+                <h3 className="text-lg font-bold text-white leading-snug line-clamp-1">{app.opportunity_title}</h3>
                 
                 <div className="mt-3">
                   <h4 className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">Motivation Pitch</h4>

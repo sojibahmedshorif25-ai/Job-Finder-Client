@@ -31,7 +31,7 @@ export default function MyStartup() {
     const fetchStartup = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${API_URL}/startups/my-profile`);
+        const res = await axios.get(`${API_URL}/startups/my-startup`);
         if (res.data.success && res.data.startup) {
           setStartup(res.data.startup);
           setFormData({
@@ -101,10 +101,16 @@ export default function MyStartup() {
         logo: logoUrl
       };
 
-      const res = await axios.post(`${API_URL}/startups`, savePayload);
+      let res;
+      if (startup && startup._id) {
+        res = await axios.put(`${API_URL}/startups/${startup._id}`, savePayload);
+      } else {
+        res = await axios.post(`${API_URL}/startups`, savePayload);
+      }
+
       if (res.data.success) {
         setStartup(res.data.startup);
-        setMessage("Startup profile saved successfully!");
+        setMessage(startup ? "Startup profile updated successfully!" : "Startup profile saved successfully!");
       }
     } catch (err) {
       setError(err.response?.data?.message || "Failed to save startup profile.");
