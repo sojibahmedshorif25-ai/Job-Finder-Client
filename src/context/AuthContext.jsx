@@ -4,32 +4,56 @@ import axios from "axios";
 const AuthContext = createContext();
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const BETTER_AUTH_URL = `${API_URL}/auth-better`;
 
-// Configure default axios properties for cookie handling
 axios.defaults.withCredentials = true;
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+
+const apiClient = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+  headers: { 'Content-Type': 'application/json' }
+});
+
+const betterAuthClient = axios.create({
+  baseURL: BETTER_AUTH_URL,
+  withCredentials: true,
+  headers: { 'Content-Type': 'application/json' }
+});
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [premiumStatus, setPremiumStatus] = useState(false);
 
-  // Fetch current user session
+  const fetchProfile = async () => {
+    try {
+      const res = await apiClient.get('/auth/me');
+      if (res.data.success) {
+        setUser(res.data.user);
+        if (res.data.user.role === "Founder") {
+          const premRes = await apiClient.get('/payments/status');
+          setPremiumStatus(premRes.data.isPremium);
+        }
+        return res.data.user;
+      }
+    } catch (err) {
+      // ignore
+    }
+    return null;
+  };
+
   const checkSession = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`${API_URL}/auth/me`);
-      if (res.data.success) {
-        setUser(res.data.user);
-        // Check premium status if founder
-        if (res.data.user.role === "Founder") {
-          const premRes = await axios.get(`${API_URL}/payments/status`);
-          setPremiumStatus(premRes.data.isPremium);
-        }
+      const baRes = await betterAuthClient.get('/session');
+      if (baRes.data && baRes.data.user) {
+        await fetchProfile();
       } else {
         setUser(null);
       }
     } catch (err) {
-      setUser(null);
+      await fetchProfile();
     } finally {
       setLoading(false);
     }
@@ -39,39 +63,70 @@ export function AuthProvider({ children }) {
     checkSession();
   }, []);
 
-  // Login handler
   const login = async (email, password) => {
     try {
       setLoading(true);
-      const res = await axios.post(`${API_URL}/auth/login`, { email, password });
-      if (res.data.success) {
-        setUser(res.data.user);
-        if (res.data.user.role === "Founder") {
-          const premRes = await axios.get(`${API_URL}/payments/status`);
-          setPremiumStatus(premRes.data.isPremium);
+      // Try Better Auth first
+      try {
+        const res = await betterAuthClient.post('/sign-in', { email, password });
+        if (res.data && res.data.user) {
+          const profileUser = await fetchProfile();
+          if (profileUser?.role === "Founder") {
+            const premRes = await apiClient.get('/payments/status');
+            setPremiumStatus(premRes.data.isPremium);
+          }
+          return { success: true };
         }
-        return { success: true };
+      } catch (baErr) {
+        // Better Auth failed, fallback to custom JWT auth (for seed users)
+        const res = await apiClient.post('/auth/login', { email, password });
+        if (res.data.success) {
+          setUser(res.data.user);
+          if (res.data.user.role === "Founder") {
+            const premRes = await apiClient.get('/payments/status');
+            setPremiumStatus(premRes.data.isPremium);
+          }
+          return { success: true };
+        }
       }
+      return { success: false, message: "Login failed" };
     } catch (err) {
       return {
         success: false,
-        message: err.response?.data?.message || "Login failed. Please check your credentials."
+        message: err.response?.data?.message || "Invalid email or password"
       };
     } finally {
       setLoading(false);
     }
   };
 
-  // Register handler
   const register = async (userData) => {
     try {
       setLoading(true);
-      const res = await axios.post(`${API_URL}/auth/register`, userData);
-      if (res.data.success) {
-        setUser(res.data.user);
-        setPremiumStatus(false);
-        return { success: true };
+      // Try Better Auth first
+      try {
+        const res = await betterAuthClient.post('/sign-up', {
+          email: userData.email,
+          password: userData.password,
+          name: userData.name,
+          role: userData.role,
+          image: userData.image
+        });
+        if (res.data && res.data.user) {
+          await fetchProfile();
+          setPremiumStatus(false);
+          return { success: true };
+        }
+      } catch (baErr) {
+        // Better Auth failed, fallback to custom JWT auth
+        const res = await apiClient.post('/auth/register', userData);
+        if (res.data.success) {
+          setUser(res.data.user);
+          setPremiumStatus(false);
+          return { success: true };
+        }
       }
+      return { success: false, message: "Registration failed" };
     } catch (err) {
       return {
         success: false,
@@ -82,15 +137,14 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Google Login handler
   const loginWithGoogle = async (googleData) => {
     try {
       setLoading(true);
-      const res = await axios.post(`${API_URL}/auth/google`, googleData);
+      const res = await apiClient.post('/auth/google', googleData);
       if (res.data.success) {
         setUser(res.data.user);
         if (res.data.user.role === "Founder") {
-          const premRes = await axios.get(`${API_URL}/payments/status`);
+          const premRes = await apiClient.get('/payments/status');
           setPremiumStatus(premRes.data.isPremium);
         }
         return { success: true };
@@ -105,28 +159,26 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Logout handler
   const logout = async () => {
     try {
       setLoading(true);
-      await axios.post(`${API_URL}/auth/logout`);
+      await betterAuthClient.post('/sign-out');
       setUser(null);
       setPremiumStatus(false);
       return { success: true };
     } catch (err) {
-      console.error("Logout error", err);
-      setUser(null); // Force reset
+      try { await apiClient.post('/auth/logout'); } catch (_) {}
+      setUser(null);
       setPremiumStatus(false);
-      return { success: false };
+      return { success: true };
     } finally {
       setLoading(false);
     }
   };
 
-  // Update Profile handler
   const updateProfile = async (profileData) => {
     try {
-      const res = await axios.put(`${API_URL}/auth/profile`, profileData);
+      const res = await apiClient.put('/auth/profile', profileData);
       if (res.data.success) {
         setUser(prev => ({
           ...prev,
@@ -142,11 +194,10 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Refresh Premium Status (e.g. after payment success)
   const refreshPremium = async () => {
     if (user && user.role === "Founder") {
       try {
-        const res = await axios.get(`${API_URL}/payments/status`);
+        const res = await apiClient.get('/payments/status');
         setPremiumStatus(res.data.isPremium);
       } catch (err) {
         console.error("Failed to refresh premium", err);

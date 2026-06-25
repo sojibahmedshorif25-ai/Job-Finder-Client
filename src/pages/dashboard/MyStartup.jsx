@@ -16,6 +16,7 @@ export default function MyStartup() {
     startup_name: "",
     industry: "",
     funding_stage: "Pre-seed",
+    team_size: "",
     description: ""
   });
   const [imageFile, setImageFile] = useState(null);
@@ -38,6 +39,7 @@ export default function MyStartup() {
             startup_name: res.data.startup.startup_name || "",
             industry: res.data.startup.industry || "",
             funding_stage: res.data.startup.funding_stage || "Pre-seed",
+            team_size: res.data.startup.team_size || "",
             description: res.data.startup.description || ""
           });
           setImagePreview(res.data.startup.logo || "");
@@ -127,26 +129,11 @@ export default function MyStartup() {
       
       const res = await axios.post(`${API_URL}/payments/create-checkout-session`);
       if (res.data.url) {
-        // Redirect user to Stripe
+        // Redirect user to Stripe or mock payment page
         window.location.href = res.data.url;
       }
     } catch (err) {
-      // Mock Bypass for local tests if stripeSecretKey is a dummy test key
       setError(err.response?.data?.message || "Stripe Checkout session failed.");
-      
-      // If server falls back to mock payment verification, we can trigger verification automatically
-      // to let local candidates complete tasks easily without real Stripe connections.
-      if (err.response?.status === 500 || err.response?.data?.message?.includes("Stripe")) {
-        try {
-          const verifyMock = await axios.post(`${API_URL}/payments/verify-session`, { session_id: "mock_session_id" });
-          if (verifyMock.data.success) {
-            refreshPremium();
-            setMessage("Offline mock payment simulated successfully! Premium Activated.");
-          }
-        } catch (mockErr) {
-          console.error("Mock verify failed", mockErr);
-        }
-      }
     } finally {
       setCheckoutLoading(false);
     }
@@ -271,6 +258,23 @@ export default function MyStartup() {
                   <option value="Series C">Series C / Growth</option>
                 </select>
               </div>
+            </div>
+
+            {/* Team Size */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                Team Size Needed
+              </label>
+              <input
+                type="number"
+                name="team_size"
+                required
+                min="1"
+                value={formData.team_size}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2.5 bg-dark-900 border border-dark-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-brand-500/60"
+                placeholder="e.g. 5"
+              />
             </div>
 
             {/* Description */}

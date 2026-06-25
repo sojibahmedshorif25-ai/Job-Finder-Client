@@ -105,9 +105,9 @@ export default function Login() {
               <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
                 Password
               </label>
-              <a href="#" className="text-[10px] text-brand-400 hover:text-brand-300 transition-colors">
+              <Link to="/login" className="text-[10px] text-slate-600 cursor-not-allowed" title="Password reset coming soon">
                 Forgot password?
-              </a>
+              </Link>
             </div>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-650" />

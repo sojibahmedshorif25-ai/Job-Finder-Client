@@ -42,7 +42,8 @@ export default function StartupDetails() {
             founder_email: "founder1@tesla.com",
             founder_name: "Elon Musk",
             description: "SpaceX Gen designs, manufactures and launches advanced rockets and spacecraft. The company was founded in 2002 to revolutionize space technology, with the ultimate goal of enabling people to live on other planets. We look for passionate builders who aren't afraid of complex physics, aerospace mechanics, and full-stack control software.",
-            funding_stage: "Series C"
+            funding_stage: "Series C",
+            team_size: 12
           },
           "2": {
             _id: "2",
@@ -52,7 +53,8 @@ export default function StartupDetails() {
             founder_email: "founder2@startup.com",
             founder_name: "Jane Doe",
             description: "HealthFlow AI optimizes healthcare scheduling pipelines. Our core technology integrates with hospital databases to predict surge periods and match staff availability automatically. We are backed by Y-Combinator and seeking builders who want to fix real-world medical logistics.",
-            funding_stage: "Seed"
+            funding_stage: "Seed",
+            team_size: 5
           }
         };
 
@@ -157,6 +159,7 @@ export default function StartupDetails() {
             <div className="flex items-center justify-center sm:justify-start space-x-1.5">
               <Mail className="h-4 w-4 text-brand-500" />
               <span>Contact: {startup.founder_email}</span>
+              <span>Team Size: {startup.team_size || "TBD"}</span>
             </div>
             <div className="flex items-center justify-center sm:justify-start space-x-1.5">
               <Award className="h-4 w-4 text-indigo-500" />

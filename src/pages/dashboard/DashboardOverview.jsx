@@ -136,6 +136,28 @@ export default function DashboardOverview() {
               </div>
             </div>
           </div>
+
+          {/* Founder Bar Chart */}
+          <div className="glass p-6 rounded-xl border border-dark-850">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Recruitment Funnel</h3>
+            <div className="flex items-end justify-around h-32 gap-4">
+              <div className="flex flex-col items-center flex-1">
+                <span className="text-xs font-bold text-brand-400 mb-1">{data.totalOpps}</span>
+                <div className="w-full bg-brand-500/20 rounded-t" style={{ height: `${Math.max(10, (data.totalOpps / Math.max(data.totalOpps, data.totalApps, data.acceptedMembers, 1)) * 100)}%` }}></div>
+                <span className="text-[9px] text-slate-500 mt-1 uppercase">Postings</span>
+              </div>
+              <div className="flex flex-col items-center flex-1">
+                <span className="text-xs font-bold text-indigo-400 mb-1">{data.totalApps}</span>
+                <div className="w-full bg-indigo-500/20 rounded-t" style={{ height: `${Math.max(10, (data.totalApps / Math.max(data.totalOpps, data.totalApps, data.acceptedMembers, 1)) * 100)}%` }}></div>
+                <span className="text-[9px] text-slate-500 mt-1 uppercase">Applications</span>
+              </div>
+              <div className="flex flex-col items-center flex-1">
+                <span className="text-xs font-bold text-emerald-400 mb-1">{data.acceptedMembers}</span>
+                <div className="w-full bg-emerald-500/20 rounded-t" style={{ height: `${Math.max(10, (data.acceptedMembers / Math.max(data.totalOpps, data.totalApps, data.acceptedMembers, 1)) * 100)}%` }}></div>
+                <span className="text-[9px] text-slate-500 mt-1 uppercase">Accepted</span>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
@@ -170,6 +192,28 @@ export default function DashboardOverview() {
               <div className="text-xs text-slate-500 uppercase font-semibold flex items-center justify-center space-x-1">
                 <AlertCircle className="h-3.5 w-3.5" />
                 <span>Rejected</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Collaborator Bar Chart */}
+          <div className="glass p-6 rounded-xl border border-dark-850">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Application Breakdown</h3>
+            <div className="flex items-end justify-around h-32 gap-4">
+              <div className="flex flex-col items-center flex-1">
+                <span className="text-xs font-bold text-amber-400 mb-1">{data.pending}</span>
+                <div className="w-full bg-amber-500/20 rounded-t" style={{ height: `${Math.max(10, (data.pending / Math.max(data.totalApps, 1)) * 100)}%` }}></div>
+                <span className="text-[9px] text-slate-500 mt-1 uppercase">Pending</span>
+              </div>
+              <div className="flex flex-col items-center flex-1">
+                <span className="text-xs font-bold text-emerald-400 mb-1">{data.accepted}</span>
+                <div className="w-full bg-emerald-500/20 rounded-t" style={{ height: `${Math.max(10, (data.accepted / Math.max(data.totalApps, 1)) * 100)}%` }}></div>
+                <span className="text-[9px] text-slate-500 mt-1 uppercase">Accepted</span>
+              </div>
+              <div className="flex flex-col items-center flex-1">
+                <span className="text-xs font-bold text-red-400 mb-1">{data.rejected}</span>
+                <div className="w-full bg-red-500/20 rounded-t" style={{ height: `${Math.max(10, (data.rejected / Math.max(data.totalApps, 1)) * 100)}%` }}></div>
+                <span className="text-[9px] text-slate-500 mt-1 uppercase">Rejected</span>
               </div>
             </div>
           </div>
@@ -218,6 +262,28 @@ export default function DashboardOverview() {
               <div>
                 <div className="text-xl font-extrabold text-white">${data.totalRevenue}</div>
                 <div className="text-[10px] text-slate-500 uppercase font-bold">Total Revenue</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Admin Bar Chart */}
+          <div className="glass p-6 rounded-xl border border-dark-850">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Platform Metrics</h3>
+            <div className="flex items-end justify-around h-32 gap-4">
+              <div className="flex flex-col items-center flex-1">
+                <span className="text-xs font-bold text-brand-400 mb-1">{data.totalUsers}</span>
+                <div className="w-full bg-brand-500/20 rounded-t" style={{ height: `${Math.max(10, (data.totalUsers / Math.max(data.totalUsers, data.totalStartups, data.totalOpportunities, 1)) * 100)}%` }}></div>
+                <span className="text-[9px] text-slate-500 mt-1 uppercase">Users</span>
+              </div>
+              <div className="flex flex-col items-center flex-1">
+                <span className="text-xs font-bold text-indigo-400 mb-1">{data.totalStartups}</span>
+                <div className="w-full bg-indigo-500/20 rounded-t" style={{ height: `${Math.max(10, (data.totalStartups / Math.max(data.totalUsers, data.totalStartups, data.totalOpportunities, 1)) * 100)}%` }}></div>
+                <span className="text-[9px] text-slate-500 mt-1 uppercase">Startups</span>
+              </div>
+              <div className="flex flex-col items-center flex-1">
+                <span className="text-xs font-bold text-pink-400 mb-1">{data.totalOpportunities}</span>
+                <div className="w-full bg-pink-500/20 rounded-t" style={{ height: `${Math.max(10, (data.totalOpportunities / Math.max(data.totalUsers, data.totalStartups, data.totalOpportunities, 1)) * 100)}%` }}></div>
+                <span className="text-[9px] text-slate-500 mt-1 uppercase">Positions</span>
               </div>
             </div>
           </div>

@@ -47,7 +47,8 @@ export default function Home() {
       founder_email: "elon@astrolaunch.com",
       founder_name: "Elon Musk",
       description: "Developing automated low-orbit cargo capsules for space logistics.",
-      funding_stage: "Series A"
+      funding_stage: "Series A",
+      team_size: 8
     },
     {
       _id: "2",
@@ -57,7 +58,8 @@ export default function Home() {
       founder_email: "jane@medflow.io",
       founder_name: "Dr. Jane Adams",
       description: "AI-powered scheduling pipelines for regional emergency rooms.",
-      funding_stage: "Seed"
+      funding_stage: "Seed",
+      team_size: 4
     },
     {
       _id: "3",
@@ -67,7 +69,8 @@ export default function Home() {
       founder_email: "carl@greengrid.net",
       founder_name: "Carl Sagan",
       description: "Decentralized energy grids sharing solar capacity across residential areas.",
-      funding_stage: "Pre-seed"
+      funding_stage: "Pre-seed",
+      team_size: 6
     }
   ];
 
@@ -243,6 +246,7 @@ export default function Home() {
                 <h3 className="text-lg font-bold text-white mb-1">{startup.startup_name}</h3>
                 <p className="text-xs text-slate-400 mb-2">Founded by: {startup.founder_name || "Startup Founder"}</p>
                 <p className="text-xs text-slate-500 line-clamp-3 leading-relaxed">{startup.description}</p>
+                <p className="text-xs text-slate-500 mt-2">Team Size: <strong className="text-slate-350">{startup.team_size || "TBD"}</strong></p>
               </div>
 
               <div className="border-t border-dark-850/60 pt-4 flex items-center justify-between mt-auto">

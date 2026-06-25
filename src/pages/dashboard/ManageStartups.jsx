@@ -108,6 +108,7 @@ export default function ManageStartups() {
                   <td className="p-4">
                     <span className="font-semibold text-slate-350">{s.industry}</span>
                     <div className="text-[9px] text-slate-500">{s.funding_stage}</div>
+                    <div className="text-[9px] text-slate-600">Team: {s.team_size || "?"}</div>
                   </td>
                   <td className="p-4">
                     {s.status === "Pending" ? (
