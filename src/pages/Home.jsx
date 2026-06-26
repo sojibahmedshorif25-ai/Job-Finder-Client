@@ -138,18 +138,14 @@ export default function Home() {
             variants={staggerContainer}
             className="relative space-y-6 text-left"
           >
-            {/* Subtle background pattern behind text */}
-            <div className="absolute -inset-20 pointer-events-none overflow-hidden">
-              <div className="absolute top-10 -left-10 w-64 h-64 bg-brand-500/5 rounded-full blur-[60px]"></div>
-              <div className="absolute bottom-10 -right-10 w-48 h-48 bg-indigo-500/5 rounded-full blur-[50px]"></div>
-              <svg className="absolute inset-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <pattern id="hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-white"/>
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#hero-grid)" />
-              </svg>
+            {/* Background image behind text */}
+            <div className="absolute -inset-20 pointer-events-none overflow-hidden rounded-3xl">
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
+                alt=""
+                className="w-full h-full object-cover opacity-[0.08]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-dark-950 via-dark-950/95 to-dark-950/80"></div>
             </div>
             <motion.div variants={fadeInUp} className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider">
               <Sparkles className="h-3 w-3" />
