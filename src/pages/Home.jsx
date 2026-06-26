@@ -126,55 +126,71 @@ export default function Home() {
   return (
     <div className="space-y-24 pb-20">
       {/* 1. Banner Section (Hero) */}
-      <section className="relative overflow-hidden pt-12 md:pt-24 pb-12 flex items-center min-h-[85vh]">
-        {/* Dynamic Background Gradients */}
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-brand-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[350px] h-[350px] bg-purple-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+      <section className="relative overflow-hidden pt-12 md:pt-24 pb-12 flex items-center min-h-[90vh]">
+        {/* Premium background layers */}
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950 pointer-events-none"></div>
+        <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-500/8 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute bottom-1/4 right-1/3 translate-x-1/2 translate-y-1/2 w-[400px] h-[400px] bg-purple-500/8 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-indigo-500/5 rounded-full blur-[80px] pointer-events-none"></div>
+        
+        {/* Subtle grid overlay */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.02]" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="hero-subtle-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="0.3" className="text-white"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hero-subtle-grid)" />
+        </svg>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="relative space-y-6 text-left"
+            className="space-y-6 text-left"
           >
-            {/* Background image like right side */}
-            <div className="absolute -inset-20 pointer-events-none overflow-hidden rounded-3xl">
-              <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
-                alt=""
-                className="w-full h-full object-cover opacity-90"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/60 to-dark-950"></div>
-            </div>
             <motion.div variants={fadeInUp} className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider">
               <Sparkles className="h-3 w-3" />
               <span>Forging Next-Gen Startup Teams</span>
             </motion.div>
 
             <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-              Assemble Your Dream <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-indigo-400">Startup Team</span>
+              Assemble Your Dream{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-indigo-400 to-purple-400">Startup Team</span>
             </motion.h1>
 
-            <motion.p variants={fadeInUp} className="text-lg text-slate-450 max-w-xl">
+            <motion.p variants={fadeInUp} className="text-lg text-slate-400 max-w-xl leading-relaxed">
               StartupForge connects visionary founders with talented co-builders, developers, designers, and specialists who want to exchange skills for impact.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
               <Link
                 to="/opportunities"
-                className="flex items-center justify-center space-x-2 px-6 py-3.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm tracking-wide transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-brand-600/30"
+                className="group flex items-center justify-center space-x-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold text-sm tracking-wide transition-all duration-300 hover:-translate-y-1 shadow-lg shadow-brand-600/30 hover:shadow-brand-500/40"
               >
                 <span>Browse Opportunities</span>
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
               </Link>
               <Link
                 to="/startups"
-                className="flex items-center justify-center space-x-2 px-6 py-3.5 rounded-lg bg-dark-900 hover:bg-dark-850 text-slate-200 font-bold text-sm tracking-wide border border-dark-800 transition-all duration-300"
+                className="group flex items-center justify-center space-x-2 px-7 py-3.5 rounded-xl bg-dark-800/50 hover:bg-dark-800 text-slate-200 font-bold text-sm tracking-wide border border-dark-700 hover:border-dark-600 transition-all duration-300 hover:-translate-y-1"
               >
                 <Building className="h-4 w-4" />
                 <span>Explore Startups</span>
               </Link>
+            </motion.div>
+
+            {/* Trust indicators */}
+            <motion.div variants={fadeInUp} className="flex items-center space-x-6 pt-4">
+              <div className="flex -space-x-2">
+                <img className="w-8 h-8 rounded-full border-2 border-dark-900" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=50&h=50" alt="" />
+                <img className="w-8 h-8 rounded-full border-2 border-dark-900" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=50&h=50" alt="" />
+                <img className="w-8 h-8 rounded-full border-2 border-dark-900" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=50&h=50" alt="" />
+              </div>
+              <div className="text-xs text-slate-500">
+                <span className="text-slate-300 font-semibold">1,200+</span> professionals already connected
+              </div>
             </motion.div>
           </motion.div>
 
@@ -182,31 +198,44 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="relative hidden lg:block"
+            className="relative"
           >
-            <div className="relative border border-dark-800 rounded-2xl overflow-hidden glass p-4 shadow-2xl">
-              <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
-                alt="Collaborative Startup Meeting"
-                className="rounded-xl w-full h-[380px] object-cover opacity-90"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent opacity-80"></div>
-              
-              {/* Overlapping mini card */}
-              <div className="absolute bottom-8 left-8 right-8 glass p-4 rounded-xl border border-white/5 flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2.5 bg-brand-500/20 rounded-lg text-brand-400">
-                    <Users className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <div className="text-white text-xs font-semibold">Active Collaborators</div>
-                    <div className="text-slate-400 text-xs">1,240 professionals matching today</div>
-                  </div>
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-brand-600/10">
+              <div className="absolute -inset-1 bg-gradient-to-b from-brand-500/20 via-purple-500/10 to-transparent rounded-2xl blur-sm pointer-events-none"></div>
+              <div className="relative border border-dark-800 rounded-2xl overflow-hidden glass p-4">
+                <img
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
+                  alt="Collaborative Startup Meeting"
+                  className="rounded-xl w-full h-[400px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/20 to-transparent"></div>
+
+                {/* Floating badges */}
+                <div className="absolute top-6 left-6 flex items-center space-x-2 px-3 py-1.5 glass rounded-lg border border-white/5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span className="text-xs text-white font-medium">1,240 active</span>
                 </div>
-                <div className="text-right">
-                  <span className="text-xs px-2 py-1 rounded bg-brand-500/10 text-brand-400 border border-brand-500/20 font-bold">
-                    +40% growth
-                  </span>
+                <div className="absolute top-6 right-6 px-3 py-1.5 glass rounded-lg border border-white/5">
+                  <span className="text-xs text-brand-400 font-bold">+40% growth</span>
+                </div>
+                
+                {/* Bottom mini card */}
+                <div className="absolute bottom-6 left-6 right-6 glass/80 p-4 rounded-xl border border-white/5 flex items-center justify-between backdrop-blur-xl">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-brand-500/20 rounded-lg text-brand-400">
+                      <Users className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="text-white text-xs font-semibold">Active Collaborators</div>
+                      <div className="text-slate-400 text-xs">Connecting founders &amp; builders</div>
+                    </div>
+                  </div>
+                  <div className="flex -space-x-2">
+                    <img className="w-7 h-7 rounded-full border-2 border-dark-900" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=50&h=50" alt="" />
+                    <img className="w-7 h-7 rounded-full border-2 border-dark-900" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=50&h=50" alt="" />
+                    <img className="w-7 h-7 rounded-full border-2 border-dark-900" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=50&h=50" alt="" />
+                    <div className="w-7 h-7 rounded-full border-2 border-dark-900 bg-brand-600 flex items-center justify-center text-[9px] text-white font-bold">+12</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -341,27 +370,33 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* 4. Additional Section 1: Startup Statistics */}
-      <section className="bg-dark-950 py-12 relative">
-        <div className="absolute inset-0 bg-gradient-to-y from-dark-900/10 via-dark-900/50 to-dark-950 pointer-events-none"></div>
+      {/* 4. Startup Statistics */}
+      <section className="relative py-16 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900/50 to-dark-950 pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/5 rounded-full blur-[150px] pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="glass p-6 rounded-xl border border-dark-850">
-              <div className="text-3xl sm:text-4xl font-extrabold text-brand-400 mb-1">150+</div>
-              <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Startups Profiled</div>
-            </div>
-            <div className="glass p-6 rounded-xl border border-dark-850">
-              <div className="text-3xl sm:text-4xl font-extrabold text-indigo-400 mb-1">450+</div>
-              <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Opportunities Listed</div>
-            </div>
-            <div className="glass p-6 rounded-xl border border-dark-850">
-              <div className="text-3xl sm:text-4xl font-extrabold text-pink-400 mb-1">1,200+</div>
-              <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Applications Filed</div>
-            </div>
-            <div className="glass p-6 rounded-xl border border-dark-850">
-              <div className="text-3xl sm:text-4xl font-extrabold text-emerald-400 mb-1">$5.8M+</div>
-              <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Capital Seeded</div>
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {[
+              { value: "150+", label: "Startups Profiled", color: "from-brand-400 to-brand-600" },
+              { value: "450+", label: "Opportunities Listed", color: "from-indigo-400 to-indigo-600" },
+              { value: "1,200+", label: "Applications Filed", color: "from-pink-400 to-pink-600" },
+              { value: "$5.8M+", label: "Capital Seeded", color: "from-emerald-400 to-emerald-600" },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.4 }}
+                className="group relative glass p-6 rounded-2xl border border-dark-800 hover:border-dark-700 transition-all duration-300 hover:-translate-y-1 text-center"
+              >
+                <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl pointer-events-none"></div>
+                <div className={`text-3xl sm:text-4xl font-extrabold bg-gradient-to-b ${stat.color} bg-clip-text text-transparent mb-2`}>
+                  {stat.value}
+                </div>
+                <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold">{stat.label}</div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -369,105 +404,167 @@ export default function Home() {
       {/* 5. How It Works */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-white tracking-tight">How It Works</h2>
-          <p className="text-sm text-slate-500 mt-2">From vision to velocity in three simple steps.</p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl font-bold text-white tracking-tight">How It Works</h2>
+            <p className="text-sm text-slate-500 mt-2">From vision to velocity in three simple steps.</p>
+          </motion.div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0, duration: 0.5 }}
-            className="text-center"
-          >
-            <div className="inline-flex p-4 rounded-2xl bg-brand-500/10 border border-brand-500/20 mb-5">
-              <Building className="h-7 w-7 text-brand-400" />
-            </div>
-            <div className="text-2xl font-extrabold text-white mb-1">
-              <span className="text-brand-400">01</span>
-            </div>
-            <h3 className="text-lg font-bold text-white mb-2">Register Your Role</h3>
-            <p className="text-sm text-slate-500 max-w-xs mx-auto">Sign up as a Founder or Collaborator. Build your profile and showcase your skills or vision.</p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.15, duration: 0.5 }}
-            className="text-center"
-          >
-            <div className="inline-flex p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 mb-5">
-              <Briefcase className="h-7 w-7 text-indigo-400" />
-            </div>
-            <div className="text-2xl font-extrabold text-white mb-1">
-              <span className="text-indigo-400">02</span>
-            </div>
-            <h3 className="text-lg font-bold text-white mb-2">Connect & Apply</h3>
-            <p className="text-sm text-slate-500 max-w-xs mx-auto">Founders post opportunities. Collaborators browse, apply, and match with teams that excite them.</p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-center"
-          >
-            <div className="inline-flex p-4 rounded-2xl bg-pink-500/10 border border-pink-500/20 mb-5">
-              <Award className="h-7 w-7 text-pink-400" />
-            </div>
-            <div className="text-2xl font-extrabold text-white mb-1">
-              <span className="text-pink-400">03</span>
-            </div>
-            <h3 className="text-lg font-bold text-white mb-2">Build & Launch</h3>
-            <p className="text-sm text-slate-500 max-w-xs mx-auto">Once matched, forge ahead together. Exchange equity, skills, and build something extraordinary.</p>
-          </motion.div>
+        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Connecting line */}
+          <div className="hidden md:block absolute top-16 left-[calc(16.66%+2rem)] right-[calc(16.66%+2rem)] h-px bg-gradient-to-r from-brand-500/40 via-indigo-500/40 to-pink-500/40"></div>
+          <div className="hidden md:block absolute top-[4.25rem] left-[calc(16.66%+2rem)] w-2 h-2 rounded-full bg-brand-400"></div>
+          <div className="hidden md:block absolute top-[4.25rem] left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-indigo-400"></div>
+          <div className="hidden md:block absolute top-[4.25rem] right-[calc(16.66%+2rem)] w-2 h-2 rounded-full bg-pink-400"></div>
+
+          {[
+            { icon: Building, num: "01", title: "Register Your Role", desc: "Sign up as a Founder or Collaborator. Build your profile and showcase your skills or vision.", color: "brand", delay: 0 },
+            { icon: Briefcase, num: "02", title: "Connect & Apply", desc: "Founders post opportunities. Collaborators browse, apply, and match with teams that excite them.", color: "indigo", delay: 0.15 },
+            { icon: Award, num: "03", title: "Build & Launch", desc: "Once matched, forge ahead together. Exchange equity, skills, and build something extraordinary.", color: "pink", delay: 0.3 },
+          ].map((step, i) => {
+            const colorMap = {
+              brand: { bg: "bg-brand-500/10", border: "border-brand-500/20", text: "text-brand-400", num: "text-brand-400" },
+              indigo: { bg: "bg-indigo-500/10", border: "border-indigo-500/20", text: "text-indigo-400", num: "text-indigo-400" },
+              pink: { bg: "bg-pink-500/10", border: "border-pink-500/20", text: "text-pink-400", num: "text-pink-400" },
+            };
+            const c = colorMap[step.color];
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: step.delay, duration: 0.5 }}
+                whileHover={{ y: -4 }}
+                className="group relative text-center p-8 rounded-2xl border border-dark-800/60 hover:border-dark-700 transition-all duration-300"
+              >
+                <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl pointer-events-none group-hover:opacity-100 transition-opacity"></div>
+                <div className={`relative inline-flex p-4 rounded-2xl ${c.bg} ${c.border} border mb-5 group-hover:scale-105 transition-transform duration-300`}>
+                  <step.icon className={`h-7 w-7 ${c.text}`} />
+                </div>
+                <div className="relative text-2xl font-extrabold text-white mb-1">
+                  <span className={c.num}>{step.num}</span>
+                </div>
+                <h3 className="relative text-lg font-bold text-white mb-2">{step.title}</h3>
+                <p className="relative text-sm text-slate-500 max-w-xs mx-auto leading-relaxed">{step.desc}</p>
+              </motion.div>
+            );
+          })}
         </div>
       </section>
 
-      {/* 6. Additional Section: Success Stories */}
+      {/* 6. Success Stories */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl font-bold text-white tracking-tight">Success Stories</h2>
-          <p className="text-sm text-slate-500 mt-2">Hear from founders who filled critical roles and builders who secured their next challenge.</p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl font-bold text-white tracking-tight">Success Stories</h2>
+            <p className="text-sm text-slate-500 mt-2">Hear from founders who filled critical roles and builders who secured their next challenge.</p>
+          </motion.div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="glass p-8 rounded-xl border border-dark-850 relative">
-            <Star className="absolute top-8 right-8 h-5 w-5 text-brand-400 fill-brand-400/20" />
-            <div className="flex items-center space-x-4 mb-6">
-              <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100"
-                alt="Sarah Jenkins"
-                className="h-14 w-14 rounded-full border border-brand-500/25 object-cover"
-              />
-              <div>
-                <h4 className="text-white font-bold">Sarah Jenkins</h4>
-                <p className="text-xs text-brand-400 font-medium">Founder of EcoRoute</p>
+          {[
+            {
+              icon: Star,
+              name: "Sarah Jenkins",
+              role: "Founder of EcoRoute",
+              img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100",
+              quote: "We had reached our free limit of 3 opportunity posts and upgraded to Premium via Stripe. That same week, we posted our lead React engineer listing and matched with Alex within 48 hours. The skill-match was 100% accurate!",
+              color: "brand",
+              delay: 0,
+            },
+            {
+              icon: Award,
+              name: "David Chen",
+              role: "Full-Stack Collaborator",
+              img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100",
+              quote: "I applied for the Machine Learning position at HealthFlow. The interface is completely reload-safe, the portfolio linking was smooth, and I received real-time updates directly on my dashboard when my status changed from pending to accepted.",
+              color: "indigo",
+              delay: 0.15,
+            },
+          ].map((story, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: story.delay, duration: 0.5 }}
+              whileHover={{ y: -4 }}
+              className="group relative glass p-8 rounded-2xl border border-dark-800 hover:border-dark-700 transition-all duration-300"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent rounded-2xl pointer-events-none"></div>
+              <story.icon className="absolute top-8 right-8 h-5 w-5 text-slate-600 group-hover:text-brand-400 transition-colors duration-300" />
+              <div className="relative flex items-center space-x-4 mb-6">
+                <div className="relative">
+                  <img
+                    src={story.img}
+                    alt={story.name}
+                    className="h-14 w-14 rounded-full object-cover border-2 border-brand-500/20 group-hover:border-brand-500/40 transition-all duration-300"
+                  />
+                  <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-emerald-500 rounded-full border-2 border-dark-900"></div>
+                </div>
+                <div>
+                  <h4 className="text-white font-bold group-hover:text-brand-200 transition-colors">{story.name}</h4>
+                  <p className="text-xs text-slate-500 font-medium">{story.role}</p>
+                </div>
               </div>
-            </div>
-            <p className="text-slate-400 text-sm leading-relaxed italic">
-              "We had reached our free limit of 3 opportunity posts and upgraded to Premium via Stripe. That same week, we posted our lead React engineer listing and matched with Alex within 48 hours. The skill-match was 100% accurate!"
-            </p>
-          </div>
-
-          <div className="glass p-8 rounded-xl border border-dark-850 relative">
-            <Award className="absolute top-8 right-8 h-5 w-5 text-indigo-400 fill-indigo-400/20" />
-            <div className="flex items-center space-x-4 mb-6">
-              <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100"
-                alt="David Chen"
-                className="h-14 w-14 rounded-full border border-brand-500/25 object-cover"
-              />
-              <div>
-                <h4 className="text-white font-bold">David Chen</h4>
-                <p className="text-xs text-brand-400 font-medium">Full-Stack Collaborator</p>
+              <p className="relative text-slate-400 text-sm leading-relaxed italic group-hover:text-slate-300 transition-colors">
+                &ldquo;{story.quote}&rdquo;
+              </p>
+              <div className="relative mt-4 flex space-x-1">
+                {[1,2,3,4,5].map(s => (
+                  <svg key={s} className="w-3.5 h-3.5 text-amber-400 fill-amber-400/80" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
               </div>
-            </div>
-            <p className="text-slate-400 text-sm leading-relaxed italic">
-              "I applied for the Machine Learning position at HealthFlow. The interface is completely reload-safe, the portfolio linking was smooth, and I received real-time updates directly on my dashboard when my status changed from pending to accepted."
-            </p>
-          </div>
+            </motion.div>
+          ))}
         </div>
+      </section>
+
+      {/* 7. CTA Section */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="relative overflow-hidden rounded-3xl border border-dark-800 p-12 md:p-16 text-center"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-600/10 via-indigo-600/5 to-purple-600/10 pointer-events-none"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-brand-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+          <div className="relative z-10">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4">
+              Ready to Build the Next Big Thing?
+            </h2>
+            <p className="text-slate-400 max-w-xl mx-auto mb-8">
+              Join thousands of founders and collaborators who are forging the future of startups — one team at a time.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+              <Link
+                to="/register"
+                className="flex items-center space-x-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold text-sm tracking-wide transition-all duration-300 hover:-translate-y-1 shadow-lg shadow-brand-600/30"
+              >
+                <span>Get Started Free</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                to="/startups"
+                className="flex items-center space-x-2 px-8 py-3.5 rounded-xl bg-dark-800/50 hover:bg-dark-800 text-slate-200 font-bold text-sm tracking-wide border border-dark-700 hover:border-dark-600 transition-all duration-300 hover:-translate-y-1"
+              >
+                <Building className="h-4 w-4" />
+                <span>Browse Startups</span>
+              </Link>
+            </div>
+          </div>
+        </motion.div>
       </section>
     </div>
   );
