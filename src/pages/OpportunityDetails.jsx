@@ -12,8 +12,19 @@ export default function OpportunityDetails() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const [opportunity, setOpportunity] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [opportunity, setOpportunity] = useState({
+    _id: "101",
+    role_title: "Rocket Guidance Systems Engineer",
+    startup_name: "SpaceX Gen",
+    startup_id: "1",
+    industry: "Aerospace",
+    required_skills: ["C++", "Rust", "Control Theory", "Embedded Systems"],
+    work_type: "On-site",
+    commitment_level: "Full-time",
+    deadline: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+    founder_email: "founder1@tesla.com"
+  });
+  const [loading, setLoading] = useState(false);
   const [applied, setApplied] = useState(false);
   
   // Form state
@@ -27,14 +38,14 @@ export default function OpportunityDetails() {
     const fetchOpportunity = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${API_URL}/opportunities/${id}`);
+        const res = await axios.get(`${API_URL}/opportunities/${id}`, { timeout: 5000 });
         if (res.data.success) {
           setOpportunity(res.data.opportunity);
         }
 
         // If collaborator, check if they have already applied
         if (user && user.role === "Collaborator") {
-          const appsRes = await axios.get(`${API_URL}/applications/my-applications`);
+          const appsRes = await axios.get(`${API_URL}/applications/my-applications`, { timeout: 5000 });
           if (appsRes.data.success) {
             const hasApplied = appsRes.data.applications.some(
               (app) => app.opportunity_id === id
@@ -43,20 +54,7 @@ export default function OpportunityDetails() {
           }
         }
       } catch (err) {
-        console.error("Failed to load opportunity", err);
-        // Fallback mock
-        setOpportunity({
-          _id: "101",
-          role_title: "Rocket Guidance Systems Engineer",
-          startup_name: "SpaceX Gen",
-          startup_id: "1",
-          industry: "Aerospace",
-          required_skills: ["C++", "Rust", "Control Theory", "Embedded Systems"],
-          work_type: "On-site",
-          commitment_level: "Full-time",
-          deadline: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-          founder_email: "founder1@tesla.com"
-        });
+        // keep mock data
       } finally {
         setLoading(false);
       }
