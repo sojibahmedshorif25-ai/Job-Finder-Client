@@ -45,10 +45,12 @@ export default function BrowseOpportunities() {
       if (industry) params.append("industry", industry);
 
       const res = await axios.get(`${API_URL}/opportunities?${params.toString()}`);
-      if (res.data.success) {
+      if (res.data.success && res.data.opportunities?.length > 0) {
         setOpportunities(res.data.opportunities);
         setTotalPages(res.data.pagination.pages);
         setTotalCount(res.data.pagination.total);
+      } else {
+        throw new Error("Empty data");
       }
     } catch (err) {
       console.error("Failed to load opportunities, using mock pagination", err);

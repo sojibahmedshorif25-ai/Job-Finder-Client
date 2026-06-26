@@ -34,10 +34,12 @@ export default function BrowseStartups() {
       params.append("page", page);
       params.append("limit", 9);
       const res = await axios.get(`${API_URL}/startups?${params.toString()}`);
-      if (res.data.success) {
+      if (res.data.success && res.data.startups?.length > 0) {
         setStartups(res.data.startups);
         setTotalPages(res.data.pagination.pages);
         setTotalCount(res.data.pagination.total);
+      } else {
+        throw new Error("Empty data");
       }
     } catch (err) {
       console.error("Failed to load startups, using mock data", err);
