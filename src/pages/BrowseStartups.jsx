@@ -18,14 +18,51 @@ export default function BrowseStartups() {
     visible: { transition: { staggerChildren: 0.08 } }
   };
 
-  const [startups, setStartups] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [startups, setStartups] = useState([
+    {
+      _id: "1",
+      startup_name: "SpaceX Gen",
+      logo: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=150",
+      industry: "Aerospace",
+      founder_email: "founder1@tesla.com",
+      founder_name: "Elon Musk",
+      description: "Developing reusable orbital rockets to enable humans to become a multi-planetary species.",
+      funding_stage: "Series C",
+      team_size: 12,
+      status: "Approved"
+    },
+    {
+      _id: "2",
+      startup_name: "HealthFlow AI",
+      logo: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=150",
+      industry: "Healthcare",
+      founder_email: "founder2@startup.com",
+      founder_name: "Jane Doe",
+      description: "Leveraging machine learning to predict and optimize patient flow in regional hospitals.",
+      funding_stage: "Seed",
+      team_size: 5,
+      status: "Approved"
+    },
+    {
+      _id: "3",
+      startup_name: "EcoCharge",
+      logo: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=150",
+      industry: "CleanTech",
+      founder_email: "jane@ecocharge.io",
+      founder_name: "Sarah Connor",
+      description: "Mobile solar recharging stations for micro-mobility fleets in smart cities.",
+      funding_stage: "Pre-seed",
+      team_size: 6,
+      status: "Approved"
+    }
+  ]);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [selectedIndustry, setSelectedIndustry] = useState("All");
 
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(3);
+  const [totalCount, setTotalCount] = useState(9);
 
   const fetchStartups = async () => {
     try {
@@ -33,56 +70,14 @@ export default function BrowseStartups() {
       const params = new URLSearchParams();
       params.append("page", page);
       params.append("limit", 9);
-      const res = await axios.get(`${API_URL}/startups?${params.toString()}`);
+      const res = await axios.get(`${API_URL}/startups?${params.toString()}`, { timeout: 5000 });
       if (res.data.success && res.data.startups?.length > 0) {
         setStartups(res.data.startups);
         setTotalPages(res.data.pagination.pages);
         setTotalCount(res.data.pagination.total);
-      } else {
-        throw new Error("Empty data");
       }
     } catch (err) {
-      console.error("Failed to load startups, using mock data", err);
-      setStartups([
-        {
-          _id: "1",
-          startup_name: "SpaceX Gen",
-          logo: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=150",
-          industry: "Aerospace",
-          founder_email: "founder1@tesla.com",
-          founder_name: "Elon Musk",
-          description: "Developing reusable orbital rockets to enable humans to become a multi-planetary species.",
-          funding_stage: "Series C",
-          team_size: 12,
-          status: "Approved"
-        },
-        {
-          _id: "2",
-          startup_name: "HealthFlow AI",
-          logo: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=150",
-          industry: "Healthcare",
-          founder_email: "founder2@startup.com",
-          founder_name: "Jane Doe",
-          description: "Leveraging machine learning to predict and optimize patient flow in regional hospitals.",
-          funding_stage: "Seed",
-          team_size: 5,
-          status: "Approved"
-        },
-        {
-          _id: "3",
-          startup_name: "EcoCharge",
-          logo: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=150",
-          industry: "CleanTech",
-          founder_email: "jane@ecocharge.io",
-          founder_name: "Sarah Connor",
-          description: "Mobile solar recharging stations for micro-mobility fleets in smart cities.",
-          funding_stage: "Pre-seed",
-          team_size: 6,
-          status: "Approved"
-        }
-      ]);
-      setTotalPages(1);
-      setTotalCount(3);
+      // API unavailable — keep default mock data
     } finally {
       setLoading(false);
     }

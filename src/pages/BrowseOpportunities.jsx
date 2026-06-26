@@ -18,16 +18,47 @@ export default function BrowseOpportunities() {
     visible: { transition: { staggerChildren: 0.08 } }
   };
 
-  const [opportunities, setOpportunities] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [opportunities, setOpportunities] = useState([
+    {
+      _id: "101",
+      role_title: "Rocket Guidance Systems Engineer",
+      startup_name: "SpaceX Gen",
+      industry: "Aerospace",
+      required_skills: ["C++", "Rust", "Control Theory", "Embedded Systems"],
+      work_type: "On-site",
+      commitment_level: "Full-time",
+      deadline: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toLocaleDateString()
+    },
+    {
+      _id: "102",
+      role_title: "React Web Developer (Mission Control)",
+      startup_name: "SpaceX Gen",
+      industry: "Aerospace",
+      required_skills: ["React", "JavaScript", "D3.js", "Tailwind CSS"],
+      work_type: "Remote",
+      commitment_level: "Full-time",
+      deadline: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toLocaleDateString()
+    },
+    {
+      _id: "103",
+      role_title: "Python Data Scientist (ML)",
+      startup_name: "HealthFlow AI",
+      industry: "Healthcare",
+      required_skills: ["Python", "PyTorch", "Pandas", "Healthcare Data"],
+      work_type: "Hybrid",
+      commitment_level: "Part-time",
+      deadline: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000).toLocaleDateString()
+    }
+  ]);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [workType, setWorkType] = useState([]);
   const [industry, setIndustry] = useState("");
-  
+
   // Pagination
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(3);
+  const [totalCount, setTotalCount] = useState(9);
 
   // Hardcoded filters for sidebar
   const workTypes = ["Remote", "Hybrid", "On-site"];
@@ -44,52 +75,14 @@ export default function BrowseOpportunities() {
       if (workType.length > 0) params.append("workType", workType.join(","));
       if (industry) params.append("industry", industry);
 
-      const res = await axios.get(`${API_URL}/opportunities?${params.toString()}`);
+      const res = await axios.get(`${API_URL}/opportunities?${params.toString()}`, { timeout: 5000 });
       if (res.data.success && res.data.opportunities?.length > 0) {
         setOpportunities(res.data.opportunities);
         setTotalPages(res.data.pagination.pages);
         setTotalCount(res.data.pagination.total);
-      } else {
-        throw new Error("Empty data");
       }
     } catch (err) {
-      console.error("Failed to load opportunities, using mock pagination", err);
-      // Mock fallback
-      const mockOpps = [
-        {
-          _id: "101",
-          role_title: "Rocket Guidance Systems Engineer",
-          startup_name: "SpaceX Gen",
-          industry: "Aerospace",
-          required_skills: ["C++", "Rust", "Control Theory", "Embedded Systems"],
-          work_type: "On-site",
-          commitment_level: "Full-time",
-          deadline: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toLocaleDateString()
-        },
-        {
-          _id: "102",
-          role_title: "React Web Developer (Mission Control)",
-          startup_name: "SpaceX Gen",
-          industry: "Aerospace",
-          required_skills: ["React", "JavaScript", "D3.js", "Tailwind CSS"],
-          work_type: "Remote",
-          commitment_level: "Full-time",
-          deadline: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toLocaleDateString()
-        },
-        {
-          _id: "103",
-          role_title: "Python Data Scientist (ML)",
-          startup_name: "HealthFlow AI",
-          industry: "Healthcare",
-          required_skills: ["Python", "PyTorch", "Pandas", "Healthcare Data"],
-          work_type: "Hybrid",
-          commitment_level: "Part-time",
-          deadline: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000).toLocaleDateString()
-        }
-      ];
-      setOpportunities(mockOpps);
-      setTotalPages(1);
-      setTotalCount(mockOpps.length);
+      // API unavailable — keep default mock data
     } finally {
       setLoading(false);
     }
