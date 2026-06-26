@@ -3,7 +3,7 @@ import axios from "axios";
 import { CreditCard, ShieldAlert, DollarSign, Calendar } from "lucide-react";
 import Loading from "../Loading";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+import API_URL from "../../api";
 
 export default function Transactions() {
   const [transactions, setTransactions] = useState([]);

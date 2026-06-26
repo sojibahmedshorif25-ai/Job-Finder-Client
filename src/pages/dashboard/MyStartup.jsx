@@ -4,7 +4,7 @@ import axios from "axios";
 import { Building, Upload, ShieldCheck, CreditCard, Sparkles, Check } from "lucide-react";
 import Loading from "../Loading";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+import API_URL from "../../api";
 
 export default function MyStartup() {
   const { user, premiumStatus, refreshPremium } = useAuth();

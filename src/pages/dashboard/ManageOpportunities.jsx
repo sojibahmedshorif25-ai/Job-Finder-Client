@@ -3,7 +3,7 @@ import axios from "axios";
 import { Briefcase, Trash2, Edit3, Calendar, ShieldAlert, X, Check } from "lucide-react";
 import Loading from "../Loading";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+import API_URL from "../../api";
 
 export default function ManageOpportunities() {
   const [opportunities, setOpportunities] = useState([]);

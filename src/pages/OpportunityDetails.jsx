@@ -5,7 +5,7 @@ import axios from "axios";
 import { ArrowLeft, Briefcase, Calendar, Building, ListChecks, ShieldAlert, Award, FileText } from "lucide-react";
 import Loading from "./Loading";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+import API_URL from "../api";
 
 export default function OpportunityDetails() {
   const { id } = useParams();

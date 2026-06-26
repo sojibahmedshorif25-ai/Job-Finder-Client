@@ -3,7 +3,8 @@ import axios from "axios";
 
 const AuthContext = createContext();
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const rawUrl = (import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace(/\/+$/, "");
+const API_URL = rawUrl.endsWith("/api") ? rawUrl : `${rawUrl}/api`;
 const BETTER_AUTH_URL = `${API_URL}/auth-better`;
 
 axios.defaults.withCredentials = true;

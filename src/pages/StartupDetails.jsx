@@ -4,7 +4,7 @@ import axios from "axios";
 import { ArrowLeft, Building, Mail, Award, CheckCircle, Calendar, Briefcase } from "lucide-react";
 import Loading from "./Loading";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+import API_URL from "../api";
 
 export default function StartupDetails() {
   const { id } = useParams();

@@ -5,7 +5,7 @@ import axios from "axios";
 import { PlusCircle, ShieldAlert, Sparkles, Building, ChevronRight } from "lucide-react";
 import Loading from "../Loading";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+import API_URL from "../../api";
 
 export default function AddOpportunity() {
   const { premiumStatus, refreshPremium } = useAuth();

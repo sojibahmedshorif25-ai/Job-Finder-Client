@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import API_URL from "../api";
 import { Rocket, Lock, Mail, ShieldAlert } from "lucide-react";
 
 export default function Login() {
@@ -39,7 +40,6 @@ export default function Login() {
   const handleGoogleLogin = async () => {
     setError("");
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
       const res = await axios.get(`${API_URL}/auth-better/social-sign-in`);
       if (res.data?.url) {
         window.location.href = res.data.url;

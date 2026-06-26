@@ -4,7 +4,7 @@ import axios from "axios";
 import { Search, Briefcase, Calendar, ChevronLeft, ChevronRight, X, SlidersHorizontal } from "lucide-react";
 import Loading from "./Loading";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+import API_URL from "../api";
 
 export default function BrowseOpportunities() {
   const [opportunities, setOpportunities] = useState([]);

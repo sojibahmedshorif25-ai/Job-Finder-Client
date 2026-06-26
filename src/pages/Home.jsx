@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import { ArrowRight, Briefcase, Building, Users, Star, Award, Sparkles, CheckCircle2 } from "lucide-react";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+import API_URL from "../api";
 
 export default function Home() {
   const [featuredStartups, setFeaturedStartups] = useState([]);
