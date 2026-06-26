@@ -8,91 +8,56 @@ import API_URL from "../api";
 
 export default function StartupDetails() {
   const { id } = useParams();
-  const [startup, setStartup] = useState(null);
-  const [opportunities, setOpportunities] = useState([]);
-  const [loading, setLoading] = useState(true);
+
+  const mockStartups = {
+    "1": {
+      _id: "1",
+      startup_name: "SpaceX Gen",
+      logo: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=150",
+      industry: "Aerospace",
+      founder_email: "founder1@tesla.com",
+      founder_name: "Elon Musk",
+      description: "SpaceX Gen designs, manufactures and launches advanced rockets and spacecraft. The company was founded in 2002 to revolutionize space technology, with the ultimate goal of enabling people to live on other planets. We look for passionate builders who aren't afraid of complex physics, aerospace mechanics, and full-stack control software.",
+      funding_stage: "Series C",
+      team_size: 12
+    },
+    "2": {
+      _id: "2",
+      startup_name: "HealthFlow AI",
+      logo: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=150",
+      industry: "Healthcare",
+      founder_email: "founder2@startup.com",
+      founder_name: "Jane Doe",
+      description: "HealthFlow AI optimizes healthcare scheduling pipelines. Our core technology integrates with hospital databases to predict surge periods and match staff availability automatically. We are backed by Y-Combinator and seeking builders who want to fix real-world medical logistics.",
+      funding_stage: "Seed",
+      team_size: 5
+    }
+  };
+
+  const mockOpps = [
+    { _id: "101", startup_id: "1", role_title: "Rocket Guidance Systems Engineer", startup_name: "SpaceX Gen", required_skills: ["C++", "Rust", "Control Theory", "Embedded Systems"], work_type: "On-site", commitment_level: "Full-time", deadline: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toLocaleDateString() },
+    { _id: "102", startup_id: "1", role_title: "React Web Developer (Mission Control)", startup_name: "SpaceX Gen", required_skills: ["React", "JavaScript", "D3.js", "Tailwind CSS"], work_type: "Remote", commitment_level: "Full-time", deadline: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toLocaleDateString() },
+    { _id: "103", startup_id: "2", role_title: "Python Data Scientist (ML)", startup_name: "HealthFlow AI", required_skills: ["Python", "PyTorch", "Pandas", "Healthcare Data"], work_type: "Hybrid", commitment_level: "Part-time", deadline: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000).toLocaleDateString() }
+  ];
+
+  const [startup, setStartup] = useState(mockStartups[id] || mockStartups["1"]);
+  const [opportunities, setOpportunities] = useState(mockOpps.filter((o) => o.startup_id === id));
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
       try {
         setLoading(true);
-        // Fetch startup details
-        const startupRes = await axios.get(`${API_URL}/startups/${id}`);
-        if (startupRes.data.success) {
+        const startupRes = await axios.get(`${API_URL}/startups/${id}`, { timeout: 5000 });
+        if (startupRes.data.success && startupRes.data.startup) {
           setStartup(startupRes.data.startup);
         }
-
-        // Fetch opportunities and filter by startup_id
-        const oppsRes = await axios.get(`${API_URL}/opportunities`);
-        if (oppsRes.data.success) {
-          const filtered = oppsRes.data.opportunities.filter(
-            (opp) => opp.startup_id === id
-          );
-          setOpportunities(filtered);
+        const oppsRes = await axios.get(`${API_URL}/opportunities`, { timeout: 5000 });
+        if (oppsRes.data.success && oppsRes.data.opportunities?.length > 0) {
+          setOpportunities(oppsRes.data.opportunities.filter(o => o.startup_id === id));
         }
       } catch (err) {
-        console.error("Failed to load details, using mock fallback", err);
-        // Mock fallback
-        const mockStartups = {
-          "1": {
-            _id: "1",
-            startup_name: "SpaceX Gen",
-            logo: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=150",
-            industry: "Aerospace",
-            founder_email: "founder1@tesla.com",
-            founder_name: "Elon Musk",
-            description: "SpaceX Gen designs, manufactures and launches advanced rockets and spacecraft. The company was founded in 2002 to revolutionize space technology, with the ultimate goal of enabling people to live on other planets. We look for passionate builders who aren't afraid of complex physics, aerospace mechanics, and full-stack control software.",
-            funding_stage: "Series C",
-            team_size: 12
-          },
-          "2": {
-            _id: "2",
-            startup_name: "HealthFlow AI",
-            logo: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=150",
-            industry: "Healthcare",
-            founder_email: "founder2@startup.com",
-            founder_name: "Jane Doe",
-            description: "HealthFlow AI optimizes healthcare scheduling pipelines. Our core technology integrates with hospital databases to predict surge periods and match staff availability automatically. We are backed by Y-Combinator and seeking builders who want to fix real-world medical logistics.",
-            funding_stage: "Seed",
-            team_size: 5
-          }
-        };
-
-        const mockOpps = [
-          {
-            _id: "101",
-            startup_id: "1",
-            role_title: "Rocket Guidance Systems Engineer",
-            startup_name: "SpaceX Gen",
-            required_skills: ["C++", "Rust", "Control Theory", "Embedded Systems"],
-            work_type: "On-site",
-            commitment_level: "Full-time",
-            deadline: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toLocaleDateString()
-          },
-          {
-            _id: "102",
-            startup_id: "1",
-            role_title: "React Web Developer (Mission Control)",
-            startup_name: "SpaceX Gen",
-            required_skills: ["React", "JavaScript", "D3.js", "Tailwind CSS"],
-            work_type: "Remote",
-            commitment_level: "Full-time",
-            deadline: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toLocaleDateString()
-          },
-          {
-            _id: "103",
-            startup_id: "2",
-            role_title: "Python Data Scientist (ML)",
-            startup_name: "HealthFlow AI",
-            required_skills: ["Python", "PyTorch", "Pandas", "Healthcare Data"],
-            work_type: "Hybrid",
-            commitment_level: "Part-time",
-            deadline: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000).toLocaleDateString()
-          }
-        ];
-
-        setStartup(mockStartups[id] || mockStartups["1"]);
-        setOpportunities(mockOpps.filter((o) => o.startup_id === id));
+        // keep mock data
       } finally {
         setLoading(false);
       }
