@@ -26,7 +26,9 @@ export default function Register() {
   const passwordRules = {
     length: formData.password.length >= 6,
     uppercase: /[A-Z]/.test(formData.password),
-    lowercase: /[a-z]/.test(formData.password)
+    lowercase: /[a-z]/.test(formData.password),
+    number: /[0-9]/.test(formData.password),
+    special: /[!@#$%^&*(),.?":{}|<>_]/.test(formData.password)
   };
 
   const handleInputChange = (e) => {
@@ -67,7 +69,7 @@ export default function Register() {
     setError("");
 
     // Validate password rules
-    if (!passwordRules.length || !passwordRules.uppercase || !passwordRules.lowercase) {
+    if (!passwordRules.length || !passwordRules.uppercase || !passwordRules.lowercase || !passwordRules.number || !passwordRules.special) {
       setError("Please ensure password matches all security requirements.");
       return;
     }
@@ -299,6 +301,22 @@ export default function Register() {
                   <X className="h-3 w-3 text-slate-600" />
                 )}
                 <span className={passwordRules.lowercase ? "text-slate-350" : "text-slate-500"}>At least one lowercase letter</span>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                {passwordRules.number ? (
+                  <Check className="h-3 w-3 text-emerald-400" />
+                ) : (
+                  <X className="h-3 w-3 text-slate-600" />
+                )}
+                <span className={passwordRules.number ? "text-slate-350" : "text-slate-500"}>At least one number</span>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                {passwordRules.special ? (
+                  <Check className="h-3 w-3 text-emerald-400" />
+                ) : (
+                  <X className="h-3 w-3 text-slate-600" />
+                )}
+                <span className={passwordRules.special ? "text-slate-350" : "text-slate-500"}>At least one special character</span>
               </div>
             </div>
           </div>
