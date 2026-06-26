@@ -15,8 +15,8 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Redirect intended route (or default dashboard)
-  const from = location.state?.from?.pathname || "/dashboard";
+  // Redirect intended route (or default home)
+  const from = location.state?.from?.pathname || "/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
