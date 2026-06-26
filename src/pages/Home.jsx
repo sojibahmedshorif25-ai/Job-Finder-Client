@@ -229,34 +229,35 @@ export default function Home() {
             <motion.div
               key={startup._id}
               variants={fadeInUp}
-              whileHover={{ y: -6, transition: { duration: 0.2 } }}
-              className="glass p-6 rounded-xl border border-dark-850 flex flex-col justify-between h-[280px]"
+              whileHover={{ y: -8, transition: { duration: 0.2 } }}
+              className="group relative glass p-6 rounded-xl border border-dark-850 hover:border-brand-500/30 transition-all duration-300 flex flex-col justify-between h-[280px]"
             >
-              <div>
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl pointer-events-none"></div>
+              <div className="relative z-10">
                 <div className="flex items-center justify-between mb-4">
                   <img
                     src={startup.logo}
                     alt={startup.startup_name}
-                    className="h-12 w-12 rounded-lg object-cover border border-dark-800"
+                    className="h-12 w-12 rounded-lg object-cover border border-dark-800 group-hover:border-brand-500/40 transition-colors duration-300"
                   />
                   <span className="text-xs px-2.5 py-0.5 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20 font-medium">
                     {startup.funding_stage}
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-white mb-1">{startup.startup_name}</h3>
+                <h3 className="text-lg font-bold text-white mb-1 group-hover:text-brand-200 transition-colors">{startup.startup_name}</h3>
                 <p className="text-xs text-slate-400 mb-2">Founded by: {startup.founder_name || "Startup Founder"}</p>
                 <p className="text-xs text-slate-500 line-clamp-3 leading-relaxed">{startup.description}</p>
                 <p className="text-xs text-slate-500 mt-2">Team Size: <strong className="text-slate-350">{startup.team_size || "TBD"}</strong></p>
               </div>
 
-              <div className="border-t border-dark-850/60 pt-4 flex items-center justify-between mt-auto">
+              <div className="relative z-10 border-t border-dark-850/60 pt-4 flex items-center justify-between mt-auto">
                 <span className="text-xs text-slate-500">Industry: <strong className="text-slate-350">{startup.industry}</strong></span>
                 <Link
                   to={`/startups/${startup._id}`}
-                  className="text-xs font-semibold text-brand-400 hover:text-brand-300 flex items-center space-x-1"
+                  className="text-xs font-semibold text-brand-400 hover:text-brand-300 flex items-center space-x-1 group/link"
                 >
                   <span>Profile</span>
-                  <ArrowRight className="h-3 w-3" />
+                  <ArrowRight className="h-3 w-3 group-hover/link:translate-x-0.5 transition-transform" />
                 </Link>
               </div>
             </motion.div>
@@ -288,26 +289,26 @@ export default function Home() {
             <motion.div
               key={opp._id}
               variants={fadeInUp}
-              whileHover={{ y: -6, transition: { duration: 0.2 } }}
-              className="glass p-6 rounded-xl border border-dark-850 flex flex-col justify-between h-[300px]"
+              whileHover={{ y: -8, transition: { duration: 0.2 } }}
+              className="group relative glass p-6 rounded-xl border border-dark-850 hover:border-indigo-500/30 transition-all duration-300 flex flex-col justify-between h-[300px]"
             >
-              <div>
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl pointer-events-none"></div>
+              <div className="relative z-10">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center space-x-2">
-                    <Briefcase className="h-4 w-4 text-brand-400" />
+                    <Briefcase className="h-4 w-4 text-indigo-400" />
                     <span className="text-xs text-slate-500 font-medium uppercase tracking-wider">{opp.work_type}</span>
                   </div>
                   <span className="text-[10px] text-red-400 bg-red-950/20 border border-red-500/25 px-2 py-0.5 rounded font-semibold uppercase">
-                    Apply by {new Date(opp.deadline).toLocaleDateString()}
+                    {new Date(opp.deadline).toLocaleDateString()}
                   </span>
                 </div>
-                <h3 className="text-base font-bold text-white mb-0.5 line-clamp-1">{opp.role_title}</h3>
-                <p className="text-xs text-brand-400 font-semibold mb-3">{opp.startup_name}</p>
+                <h3 className="text-base font-bold text-white mb-0.5 line-clamp-1 group-hover:text-indigo-200 transition-colors">{opp.role_title}</h3>
+                <p className="text-xs text-indigo-400 font-semibold mb-3">{opp.startup_name}</p>
 
-                {/* Skills tags */}
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {opp.required_skills.slice(0, 3).map((skill, index) => (
-                    <span key={index} className="text-[10px] px-2 py-0.5 rounded bg-dark-900 border border-dark-800 text-slate-400">
+                    <span key={index} className="text-[10px] px-2 py-0.5 rounded bg-dark-900 border border-dark-800 text-slate-400 group-hover:border-indigo-500/20 transition-colors">
                       {skill}
                     </span>
                   ))}
@@ -317,11 +318,11 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="border-t border-dark-850/60 pt-4 flex items-center justify-between mt-auto">
+              <div className="relative z-10 border-t border-dark-850/60 pt-4 flex items-center justify-between mt-auto">
                 <span className="text-xs text-slate-500">Commitment: <strong className="text-slate-350">{opp.commitment_level}</strong></span>
                 <Link
                   to={`/opportunities/${opp._id}`}
-                  className="px-3.5 py-1.5 rounded bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold tracking-wide transition-colors"
+                  className="px-3.5 py-1.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold tracking-wide transition-all hover:-translate-y-0.5 shadow-lg shadow-indigo-600/20"
                 >
                   Apply
                 </Link>
@@ -356,7 +357,65 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. Additional Section 2: Success Stories */}
+      {/* 5. How It Works */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold text-white tracking-tight">How It Works</h2>
+          <p className="text-sm text-slate-500 mt-2">From vision to velocity in three simple steps.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0, duration: 0.5 }}
+            className="text-center"
+          >
+            <div className="inline-flex p-4 rounded-2xl bg-brand-500/10 border border-brand-500/20 mb-5">
+              <Building className="h-7 w-7 text-brand-400" />
+            </div>
+            <div className="text-2xl font-extrabold text-white mb-1">
+              <span className="text-brand-400">01</span>
+            </div>
+            <h3 className="text-lg font-bold text-white mb-2">Register Your Role</h3>
+            <p className="text-sm text-slate-500 max-w-xs mx-auto">Sign up as a Founder or Collaborator. Build your profile and showcase your skills or vision.</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.15, duration: 0.5 }}
+            className="text-center"
+          >
+            <div className="inline-flex p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 mb-5">
+              <Briefcase className="h-7 w-7 text-indigo-400" />
+            </div>
+            <div className="text-2xl font-extrabold text-white mb-1">
+              <span className="text-indigo-400">02</span>
+            </div>
+            <h3 className="text-lg font-bold text-white mb-2">Connect & Apply</h3>
+            <p className="text-sm text-slate-500 max-w-xs mx-auto">Founders post opportunities. Collaborators browse, apply, and match with teams that excite them.</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="text-center"
+          >
+            <div className="inline-flex p-4 rounded-2xl bg-pink-500/10 border border-pink-500/20 mb-5">
+              <Award className="h-7 w-7 text-pink-400" />
+            </div>
+            <div className="text-2xl font-extrabold text-white mb-1">
+              <span className="text-pink-400">03</span>
+            </div>
+            <h3 className="text-lg font-bold text-white mb-2">Build & Launch</h3>
+            <p className="text-sm text-slate-500 max-w-xs mx-auto">Once matched, forge ahead together. Exchange equity, skills, and build something extraordinary.</p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 6. Additional Section: Success Stories */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl font-bold text-white tracking-tight">Success Stories</h2>
