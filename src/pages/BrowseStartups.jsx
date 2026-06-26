@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import axios from "axios";
 import { Building, Search, ArrowRight, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react";
 import Loading from "./Loading";
@@ -8,16 +7,6 @@ import Loading from "./Loading";
 import API_URL from "../api";
 
 export default function BrowseStartups() {
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 24 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: { transition: { staggerChildren: 0.08 } }
-  };
-
   const [startups, setStartups] = useState([
     {
       _id: "1",
@@ -99,13 +88,8 @@ export default function BrowseStartups() {
   if (loading) return <Loading />;
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={staggerContainer}
-      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8"
-    >
-      <motion.div variants={fadeInUp} className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider mb-3">
             <Building className="h-3 w-3" />
@@ -121,7 +105,7 @@ export default function BrowseStartups() {
         <div className="text-xs text-slate-500 whitespace-nowrap">
           <strong className="text-slate-400">{totalCount}</strong> startups found
         </div>
-      </motion.div>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="md:col-span-2 relative">
@@ -168,9 +152,8 @@ export default function BrowseStartups() {
         <>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {filteredStartups.map((startup) => (
-              <motion.div
+              <div
                 key={startup._id}
-                variants={fadeInUp}
                 className="group relative glass p-6 rounded-xl border border-dark-850 hover:border-brand-500/30 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between h-[280px]"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-brand-500/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl pointer-events-none"></div>
@@ -218,7 +201,7 @@ export default function BrowseStartups() {
                     <ArrowRight className="h-3.5 w-3.5 group-hover/link:translate-x-0.5 transition-transform" />
                   </Link>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
 
@@ -265,6 +248,6 @@ export default function BrowseStartups() {
           )}
         </>
       )}
-    </motion.div>
+    </div>
   );
 }

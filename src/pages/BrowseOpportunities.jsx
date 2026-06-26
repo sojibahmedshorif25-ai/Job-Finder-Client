@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import axios from "axios";
 import { Search, Briefcase, Calendar, ChevronLeft, ChevronRight, X, SlidersHorizontal } from "lucide-react";
 import Loading from "./Loading";
@@ -8,16 +7,6 @@ import Loading from "./Loading";
 import API_URL from "../api";
 
 export default function BrowseOpportunities() {
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 24 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: { transition: { staggerChildren: 0.08 } }
-  };
-
   const [opportunities, setOpportunities] = useState([
     {
       _id: "101",
@@ -115,12 +104,7 @@ export default function BrowseOpportunities() {
   };
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={staggerContainer}
-      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8"
-    >
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-extrabold text-white tracking-tight">Browse Opportunities</h1>
@@ -221,9 +205,8 @@ export default function BrowseOpportunities() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {opportunities.map((opp) => (
-                <motion.div
+                <div
                   key={opp._id}
-                  variants={fadeInUp}
                   className="glass p-6 rounded-xl border border-dark-850 flex flex-col justify-between h-[280px] hover:border-brand-500/20 transition-all duration-300 hover:-translate-y-1"
                 >
                   <div>
@@ -266,7 +249,7 @@ export default function BrowseOpportunities() {
                       View details
                     </Link>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}
@@ -297,6 +280,6 @@ export default function BrowseOpportunities() {
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
