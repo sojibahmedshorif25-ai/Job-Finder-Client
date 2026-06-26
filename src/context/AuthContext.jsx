@@ -66,28 +66,28 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     try {
       setLoading(true);
+      let res;
       // Try Better Auth first
       try {
-        const res = await betterAuthClient.post('/sign-in', { email, password });
-        if (res.data && res.data.user) {
-          const profileUser = await fetchProfile();
-          if (profileUser?.role === "Founder") {
+        res = await betterAuthClient.post('/sign-in', { email, password });
+      } catch (_) {
+        // Better Auth failed, fallback to custom JWT auth
+        try {
+          res = await apiClient.post('/auth/login', { email, password });
+        } catch (_2) {
+          return { success: false, message: "Invalid email or password" };
+        }
+      }
+      if (res.data && (res.data.user || res.data.success)) {
+        const userData = res.data.user || res.data;
+        setUser(userData);
+        if (userData.role === "Founder") {
+          try {
             const premRes = await apiClient.get('/payments/status');
             setPremiumStatus(premRes.data.isPremium);
-          }
-          return { success: true };
+          } catch (_) {}
         }
-      } catch (baErr) {
-        // Better Auth failed, fallback to custom JWT auth (for seed users)
-        const res = await apiClient.post('/auth/login', { email, password });
-        if (res.data.success) {
-          setUser(res.data.user);
-          if (res.data.user.role === "Founder") {
-            const premRes = await apiClient.get('/payments/status');
-            setPremiumStatus(premRes.data.isPremium);
-          }
-          return { success: true };
-        }
+        return { success: true };
       }
       return { success: false, message: "Login failed" };
     } catch (err) {
