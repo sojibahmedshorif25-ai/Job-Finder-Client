@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { Rocket, Lock, Mail, ShieldAlert } from "lucide-react";
 
 export default function Login() {
-  const { login, loginWithGoogle } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -37,18 +38,20 @@ export default function Login() {
 
   const handleGoogleLogin = async () => {
     setError("");
-    const mockGoogleUser = {
-      email: "founder1@tesla.com", // Fallback test user
-      name: "Elon Musk",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150",
-      role: "Founder" // Default role
-    };
-
-    const res = await loginWithGoogle(mockGoogleUser);
-    if (res.success) {
-      navigate(from, { replace: true });
-    } else {
-      setError(res.message);
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      const res = await axios.get(`${API_URL}/auth-better/social-sign-in`);
+      if (res.data?.url) {
+        window.location.href = res.data.url;
+      } else if (res.data) {
+        const userData = res.data.user || res.data;
+        if (userData?.email) {
+          const loginRes = await login(userData.email, "");
+          if (loginRes.success) navigate(from, { replace: true });
+        }
+      }
+    } catch (err) {
+      setError("Google sign-in failed. Make sure OAuth is configured.");
     }
   };
 
