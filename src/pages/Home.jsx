@@ -138,14 +138,14 @@ export default function Home() {
             variants={staggerContainer}
             className="relative space-y-6 text-left"
           >
-            {/* Background image behind text */}
+            {/* Background image like right side */}
             <div className="absolute -inset-20 pointer-events-none overflow-hidden rounded-3xl">
               <img
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
                 alt=""
-                className="w-full h-full object-cover opacity-[0.08]"
+                className="w-full h-full object-cover opacity-90"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-dark-950 via-dark-950/95 to-dark-950/80"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/60 to-dark-950"></div>
             </div>
             <motion.div variants={fadeInUp} className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider">
               <Sparkles className="h-3 w-3" />
