@@ -47,14 +47,20 @@ export function AuthProvider({ children }) {
   const checkSession = async () => {
     try {
       setLoading(true);
-      const baRes = await betterAuthClient.get('/session');
-      if (baRes.data && baRes.data.user) {
-        await fetchProfile();
-      } else {
-        setUser(null);
-      }
+      // Try JWT session first (seeded users authenticate via JWT)
+      const profile = await fetchProfile();
+      if (profile) return;
+      // JWT failed, try BetterAuth session
+      try {
+        const baRes = await betterAuthClient.get('/session');
+        if (baRes.data && baRes.data.user) {
+          setUser(baRes.data.user);
+          return;
+        }
+      } catch (_) {}
+      setUser(null);
     } catch (err) {
-      await fetchProfile();
+      setUser(null);
     } finally {
       setLoading(false);
     }
