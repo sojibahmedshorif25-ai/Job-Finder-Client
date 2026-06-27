@@ -90,7 +90,7 @@ export default function DashboardOverview() {
         </div>
         <div className="shrink-0 flex items-center space-x-3">
           <img
-            src={user.image}
+            src={user.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80"}
             alt={user.name}
             className="h-12 w-12 rounded-xl object-cover border border-brand-500/20"
           />

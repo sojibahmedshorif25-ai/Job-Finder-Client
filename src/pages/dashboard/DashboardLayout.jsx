@@ -74,7 +74,7 @@ export default function DashboardLayout() {
         {/* User Card */}
         <div className="p-4 border-b border-dark-900/60 flex items-center space-x-3">
           <img
-            src={user?.image}
+            src={user?.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80"}
             alt={user?.name}
             className="h-10 w-10 rounded-full border border-brand-500/30 object-cover"
           />
@@ -134,7 +134,7 @@ export default function DashboardLayout() {
 
             <div className="p-4 border-b border-dark-900/60 flex items-center space-x-3">
               <img
-                src={user?.image}
+                src={user?.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80"}
                 alt={user?.name}
                 className="h-10 w-10 rounded-full border border-brand-500/30 object-cover"
               />

@@ -67,7 +67,7 @@ export default function Navbar() {
                     <div className="relative">
                       <div className="absolute inset-0 bg-brand-500/10 rounded-full blur-sm"></div>
                       <img
-                        src={user.image}
+                        src={user.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80"}
                         alt={user.name}
                         className="relative h-8 w-8 rounded-full border-2 border-brand-500/40 object-cover"
                       />
@@ -136,7 +136,7 @@ export default function Navbar() {
             <div className="pt-4 border-t border-dark-800 mt-4 space-y-2">
               <div className="flex items-center px-3 space-x-3">
                 <img
-                  src={user.image}
+                  src={user.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80"}
                   alt={user.name}
                   className="h-10 w-10 rounded-full border border-brand-500 object-cover"
                 />
