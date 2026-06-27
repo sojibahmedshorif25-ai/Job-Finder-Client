@@ -68,13 +68,13 @@ export function AuthProvider({ children }) {
     try {
       setLoading(true);
       let res;
-      // Try Better Auth first
+      // Try JWT first (seeded users are in JWT collection)
       try {
-        res = await betterAuthClient.post('/sign-in', { email, password });
+        res = await apiClient.post('/auth/login', { email, password });
       } catch (_) {
-        // Better Auth failed, fallback to custom JWT auth
+        // JWT failed, fallback to BetterAuth
         try {
-          res = await apiClient.post('/auth/login', { email, password });
+          res = await betterAuthClient.post('/sign-in', { email, password });
         } catch (_2) {
           return { success: false, message: "Invalid email or password" };
         }
